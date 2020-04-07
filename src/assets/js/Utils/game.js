@@ -47,4 +47,4 @@ async function getGameNames(data,callback){
     callback(response.data[0])
 }
 
-export { getGameInfo, sendAnswerToServer,getGameNames }
+export { getGameInfo, sendAnswerToServer,getGameNames, requestGET }

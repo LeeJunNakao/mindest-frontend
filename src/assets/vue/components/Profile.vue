@@ -14,7 +14,7 @@
         <div class="profile-actions">
             <div class="info-actions">
                 
-                <div class="avatar-button-group">
+                <div v-if="id == loggedId" class="avatar-button-group">
                     <label for="avatar-input" class="avatar-button-label">Alterar avatar</label>
                     <input id="avatar-input" type="file">
                     <button class="send-avatar-button" id="avatar-button-send" @click="sendAvatar">enviar</button>
@@ -29,24 +29,27 @@
 </template>
 
 <script>
-import { getLocalStorageData } from '../../js/Utils/auth';
+import { getLocalStorageData, localStorageExists } from '../../js/Utils/auth';
+import { requestGET } from '../../js/Utils/game';
 import imageController from '../../js/Utils/controller/imageController';
 import ImageController from '../../js/Utils/controller/imageController';
+import UserController from '../../js/Utils/controller/UserController'
 
 export default {
-    computed:{
-        username(){
-            const { name } = getLocalStorageData();
-            return name;
-        },
-        id(){
-            const { _id } = getLocalStorageData();
-            return _id;
-        }
-    },
     data(){
         return{
             avatar:'',
+            username: ''
+        }
+    },
+    computed:{
+        
+        loggedId(){
+            return this.$store.state.auth.id;
+        },
+
+        id(){
+            return this.$route.params.id;
         }
     },
     methods:{
@@ -62,7 +65,6 @@ export default {
                     this.avatar = url.data.response;
                 }if(url.data.errors){
                     let erro = url.data.errors[0]
-                    console.log('ERROR',erro)
                     this.$store.commit('pushErrorDescription',erro);
                     this.$store.commit('notifyHasError');
                 }
@@ -73,10 +75,20 @@ export default {
         async getImage(){
             const image = await ImageController.getImageURL();
             this.avatar = image.data.avatar;
+        },
+        async getUserData(){
+            const userController = new UserController();
+            const response = await userController.getInfo({ _id: this.id });
+            const { name, avatar } = response.data.user;
+            this.username = name;
+            this.avatar = avatar;
         }
     },
-    created: function(){
-        this.getImage();        
+    created: function(){  
+        this.getUserData();    
+    },
+    updated:function(){
+        this.getUserData();
     }
 }
 </script>

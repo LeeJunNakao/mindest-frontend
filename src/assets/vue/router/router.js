@@ -4,6 +4,7 @@ import Game from '../components/Game.vue'
 export default {
     routes: [
         {path: '/perfil',component: Profile},
+        {path: '/perfil/:id',component: Profile},
         {path: '/', component: Home},
         {name: 'game', path: '/game/:id', component: Game}
     ]

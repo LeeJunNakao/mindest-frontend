@@ -76,20 +76,17 @@ export default {
             this.registerForm = !this.registerForm
         },
         login(){
-            this.$store.commit('changeLoadState',true)
-            
-            let type = this.registerForm ? "register" : "login"
-            authenticate(
-                type,
-                this.userData,
-                (resp)=>this.commitAuthentication(resp),
-                (state)=>this.$store.commit('changeLoadState',state)
-            )
-            
+            this.changeLoadState(true);
+            const type = this.registerForm ? "register" : "login"
+            authenticate(type,this.userData,this.commitAuthentication,this.changeLoadState)
         },
         commitAuthentication(data){
             setLocalStorage(data)
+            this.$store.commit('authenticate',true)
         },
+        changeLoadState(state){
+            this.$store.commit('changeLoadState',state)
+        }
 
     }
 

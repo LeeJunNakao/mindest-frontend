@@ -2,11 +2,11 @@ const URL = require('../../../config/URL')
 const axios = require('axios')
 const storageName = 'mindest'
 import { store } from '../index'
+import { requestGET } from './game'
 
 async function verifyIfIsAuthenticated(callback,changeState){
-    let authenticated;
     changeState(true)
-    localStorageExists() ? authenticated = await verifyIfTokenIsValid() : authenticated = false
+    const authenticated = localStorageExists() ? await verifyIfTokenIsValid() : false
     callback(authenticated)
     changeState(false)
 }
@@ -67,9 +67,10 @@ async function request(method,url,data=null){
 }
 
 async function authenticate(type,data,callback,changeState){
-    try{
+    try{    
         const url = { login: URL.login, register: URL.register }
         const response = await request('post',url[type],data)
+        
         if(response && response.data) callback(response.data)
         changeState(false)
     }catch(err){
@@ -90,4 +91,12 @@ function getLocalStorageData(){
     return JSON.parse(localStorageData);
 }
 
-export { authenticate,setLocalStorage,verifyIfIsAuthenticated, request, deleteLocalStorage, getLocalStorageData }
+async function getUserInfo(){
+    if(localStorageExists()){
+        const data = getLocalStorageData()
+        return await requestGET(URL.userInfo,data);
+    }
+    
+}
+
+export { authenticate,setLocalStorage,verifyIfIsAuthenticated, request, deleteLocalStorage, getLocalStorageData, localStorageExists, getUserInfo }

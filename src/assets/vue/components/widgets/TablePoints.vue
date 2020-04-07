@@ -16,16 +16,12 @@
 export default {
     props:['userPoints'],
     methods:{
-        getStorageData(){
-            return JSON.parse(localStorage.getItem('mindest'));
-        },
         findGameName(id){
             const game =  this.$store.getters.getGameName(id)
-            return game.name;
+            if(game.name) return game.name;
         }
     },
     created:function(){
-        const data = this.getStorageData();
         this.$store.commit('setUsername',data.name);
     },
     computed:{

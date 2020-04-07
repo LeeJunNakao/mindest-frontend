@@ -17,7 +17,7 @@
                     
                     <li class="nav-item">
                         <div class="nav-link">
-                            <router-link to="/perfil">Perfil</router-link> 
+                            <router-link :to="`/perfil/${userId}`">Perfil</router-link> 
                         </div>
                     </li>
 
@@ -34,12 +34,23 @@
 </template>
 
 <script>
-import { deleteLocalStorage } from '../../../js/Utils/auth'
+import { deleteLocalStorage, getLocalStorageData, localStorageExists } from '../../../js/Utils/auth'
 export default {
     methods:{
         logout(){
             this.$store.commit('authenticate',false);
             deleteLocalStorage();
+        }
+    },
+    data(){
+        return{
+            userId: ''
+        }
+    },
+    created:function(){
+        if(localStorageExists()){
+            const { _id } = getLocalStorageData();
+            this.userId = _id;
         }
     }
 }

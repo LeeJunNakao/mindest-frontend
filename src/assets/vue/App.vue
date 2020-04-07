@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { verifyIfIsAuthenticated } from '../js/Utils/auth'
+import { verifyIfIsAuthenticated, getUserInfo } from '../js/Utils/auth'
 export default {
     computed:{
             authenticated(){
@@ -25,17 +25,36 @@ export default {
             },
             loading(){
                 return this.$store.state.auth.loading
+            },
+            userName(){
+                return this.$store.state.auth.username
+            },
+            email(){
+                return this.$store.state.auth.userEmail
+            },
+            avatar(){
+                return this.$store.state.auth.avatarURL
             }
     },
     created: function(){
-        verifyIfIsAuthenticated(
-            (resp)=>{this.$store.commit('authenticate',resp)}, 
-            (state)=>this.$store.commit('changeLoadState',state)
-        )
+        verifyIfIsAuthenticated(this.commitAuthenticate,this.commitChangeLoadState)
+        this.setUserInfo();
     },
     methods:{
-        getUsername(){
-            localStorage.getItem('mindest')
+        commitAuthenticate(value){
+            this.$store.commit('authenticate',value);
+        },
+        commitChangeLoadState(value){
+            this.$store.commit('changeLoadState',value);
+        },
+        async setUserInfo(){
+            const { data } = await getUserInfo();
+            const { user } = data;
+
+            this.$store.commit('setUsername',user.name);
+            this.$store.commit('setUserEmail',user.email);
+            this.$store.commit('setAvatarURL',user.avatar);
+            this.$store.commit('setId', user._id);
         }
     }
 }

@@ -1,9 +1,9 @@
 import URL from '../../../../config/URL';
 import axios from 'axios';
 
-import { getLocalStorageData } from '../auth';
+import { getLocalStorageData, localStorageExists } from '../auth';
 
-const { token } = getLocalStorageData();
+const { token } = localStorageExists() ? getLocalStorageData() : { token: false}
 
 class ImageController{
 

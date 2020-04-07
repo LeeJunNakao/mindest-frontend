@@ -1,5 +1,5 @@
 
-const url = 'https://mindest-backend.herokuapp.com'
+const url = 'http://localhost:3000'
 
 const URL = {
     validateToken: `${url}/validateToken`,
@@ -10,7 +10,8 @@ const URL = {
     gameInfo: `${url}/api/gameInfo`,
     receiveUserAnswer: `${url}/api/receiveUserAnswer`,
     sendImage: `${url}/api/sendImage`,
-    getImage: `${url}/api/getImage`
+    getImage: `${url}/api/getImage`,
+    userInfo: `${url}/api/userInfo`
 }
 
 module.exports = URL
