@@ -5,8 +5,8 @@ const storageName = 'mindest'
 
 async function getUserData(callback){
     try{
-        const data = await request('get',URL.home)
-        callback(data.data)
+        const response = await request('get',URL.home)
+        callback(response.data)
     }catch(e){
         console.log('erro ao solicitar dados',e)
     }

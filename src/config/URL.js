@@ -11,7 +11,8 @@ const URL = {
     receiveUserAnswer: `${url}/api/receiveUserAnswer`,
     sendImage: `${url}/api/sendImage`,
     getImage: `${url}/api/getImage`,
-    userInfo: `${url}/api/userInfo`
+    userInfo: `${url}/api/userInfo`,
+    getLastWeekGamesStatistics: `${url}/api/statistics/lastWeekGames`
 }
 
 module.exports = URL

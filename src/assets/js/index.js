@@ -14,8 +14,11 @@ import Navbar from '../vue/components/widgets/Navbar.vue'
 import TablePoints from '../vue/components/widgets/TablePoints.vue'
 import Toast from '../vue/components/widgets/Toast.vue'
 import ToastContainer from '../vue/components/widgets/ToastContainer.vue'
+import StatisticsTable from '../vue/components/widgets/StatisticsTable'
+
 import authStore from '../vue/store/authStore'
 import gameStore from '../vue/store/gameStore'
+
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
@@ -24,6 +27,7 @@ Vue.component('Navbar',Navbar)
 Vue.component('TablePoints',TablePoints)
 Vue.component('ToastContainer', ToastContainer)
 Vue.component('Toast', Toast)
+Vue.component('StatisticsTable', StatisticsTable)
 
 const router = new VueRouter(Router)
 const store = new Vuex.Store({

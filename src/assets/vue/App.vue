@@ -18,6 +18,7 @@
 
 <script>
 import { verifyIfIsAuthenticated, getUserInfo } from '../js/Utils/auth'
+import { getUserData, getGames } from '../js/Utils/home'
 export default {
     computed:{
             authenticated(){
@@ -39,6 +40,7 @@ export default {
     created: function(){
         verifyIfIsAuthenticated(this.commitAuthenticate,this.commitChangeLoadState)
         this.setUserInfo();
+        getGames((data)=> this.$store.commit('changeGames',data))
     },
     methods:{
         commitAuthenticate(value){

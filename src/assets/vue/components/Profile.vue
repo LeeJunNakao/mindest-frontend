@@ -24,6 +24,7 @@
 
       </div>
 
+    <StatisticsTable></StatisticsTable>
 
   </div>
 </template>
@@ -34,6 +35,7 @@ import { requestGET } from '../../js/Utils/game';
 import imageController from '../../js/Utils/controller/imageController';
 import ImageController from '../../js/Utils/controller/imageController';
 import UserController from '../../js/Utils/controller/UserController'
+
 
 export default {
     data(){
@@ -85,7 +87,7 @@ export default {
         }
     },
     created: function(){  
-        this.getUserData();    
+        this.getUserData(); 
     },
     updated:function(){
         this.getUserData();

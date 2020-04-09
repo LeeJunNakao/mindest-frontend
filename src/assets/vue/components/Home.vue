@@ -14,6 +14,8 @@
         </div>   
 
         <TablePoints v-bind:user-points="userData"></TablePoints>
+        <StatisticsTable></StatisticsTable>
+
     </div>
 </template>
 
@@ -26,8 +28,7 @@ export default {
         }
     },
     created: function(){
-        getUserData((data)=>this.userData = data)
-        getGames((data)=> this.$store.commit('changeGames',data))
+        getUserData((data)=>this.userData = data);
     },
     computed:{
         games(){
@@ -67,7 +68,4 @@ export default {
     text-align: center;
 }
 
-.resume-container{
-    min-height: 60vh;
-}
 </style>

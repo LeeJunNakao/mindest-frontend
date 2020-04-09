@@ -5,6 +5,9 @@ import { localStorageExists, getLocalStorage } from './utils'
 class Request{
     constructor(){
         this.getToken();
+        this.headers = {
+            token: this.token
+        }
     }
 
     getToken(){
